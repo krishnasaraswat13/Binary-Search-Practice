@@ -1,0 +1,42 @@
+class Solution {
+    public boolean isPossible(int arr[],int k,int m){
+        int p=0;
+        int cnt=1;
+        for(int i=0;i<arr.length;i++){
+            p+=arr[i];
+            if(p>m){
+                cnt++;
+                p=arr[i];
+            }
+        }
+        if(cnt<=k){
+            return true;
+        }
+        return false;
+        
+    }
+    public int findPages(int[] arr, int k) {
+        // code here
+        if(arr.length<k){
+            return -1;
+        }
+        int l=0;
+        int h=0;
+        for(int i=0;i<arr.length;i++){
+            l=Math.max(l,arr[i]);//bcz agar no of pages book size se kam hoga to kuch books reh jaingi
+            h+=arr[i];
+        }
+        int ans=-1;
+        while(l<=h){
+            int m=l+(h-l)/2;
+            if(isPossible(arr,k,m)){
+                ans=m;
+                h=m-1;
+            }
+            else{
+               l=m+1;
+            }
+        }
+        return ans;
+    }
+}

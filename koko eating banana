@@ -1,0 +1,45 @@
+class Solution {
+    public boolean helper(int []piles,int h,int s){
+        for(int i=0;i<piles.length;i++){
+            int c=piles[i];
+           h-=((c + s - 1) / s);
+        }
+           if(h>=0){
+            return true;
+           }
+           return false;
+    }
+    public int minEatingSpeed(int[] piles, int h) {
+        int l=1;
+        int r=0;
+        int ans=0;
+        for(int i=0;i<piles.length;i++){
+            r=Math.max(r,piles[i]);
+        }
+        
+        while(l<=r){
+            int m=l+(r-l)/2;
+        if(helper(piles,h,m)){
+            ans=m;
+            r=m-1;
+        }
+        else{
+            l=m+1;
+        }
+        }
+        return ans;
+       
+    }
+}
+
+//one more way for hours calc
+//for ecxample banana piles is 12 and
+//  speed is 6 then hours will be piles/speed 
+// and if piles is 13 then hours will be (piles/speed)+1;
+
+// if(piles[i]%s==0){
+//     h-=piles[i]/s;
+// }
+// else{
+//     h-=(piles[i]/s)+1;
+// }//but it is not optimal

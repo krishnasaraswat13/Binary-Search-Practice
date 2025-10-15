@@ -1,0 +1,58 @@
+class Solution {
+    public boolean isPossible(int houses[],int heaters[],int mid){
+        //TLE
+        // boolean istrue[]=new boolean[houses.length];
+        // for(int i=0;i<heaters.length;i++){
+        //     int leftside=heaters[i]-mid;
+        //     int rightside=heaters[i]+mid;
+        //     for(int j=0;j<houses.length;j++){
+        //         if(houses[j]>=leftside && houses[j]<=rightside){
+        //             istrue[j]=true;
+        //         }
+        //     }
+        // }
+        //     for(int i=0;i<istrue.length;i++){
+        //         if(istrue[i]==false){
+        //             return false;
+        //         }
+        //     }
+    
+        //     return true;
+        int i = 0;
+        int j = 0;
+
+        while (i < houses.length) {
+            if (j >= heaters.length) {
+                return false;
+            }
+            int leftBound = heaters[j] - mid;
+            int rightBound = heaters[j] + mid;
+            if (houses[i] >= leftBound && houses[i] <= rightBound) {
+                i++;
+            } else {
+                j++;
+            }
+        }
+        return true;
+        
+    }
+    public int findRadius(int[] houses, int[] heaters) {
+        int l=0;
+        Arrays.sort(houses);
+        Arrays.sort(heaters);
+        int r=Integer.MAX_VALUE;
+        int ans=r;
+        while(l<=r){
+            int mid=l+(r-l)/2;
+            if(isPossible(houses,heaters,mid)){
+                ans=mid;
+                r=mid-1;
+            }
+            else{
+                l=mid+1;
+            }
+        }
+        return ans;
+
+    }
+}

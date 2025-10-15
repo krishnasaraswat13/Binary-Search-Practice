@@ -1,0 +1,39 @@
+class Solution {
+    public boolean isPossible(int[] dist,double hour,int mid){
+        double h=0;
+        for(int i=0;i<dist.length;i++){
+            if(i!=dist.length-1){
+                h+=(double)Math.ceil((double)dist[i]/mid);
+            }
+            else{
+                h+=(double)dist[i]/mid;
+            }
+
+        }
+        if(h<=hour){
+            return true;
+        }
+        return false;
+    }
+    public int minSpeedOnTime(int[] dist, double hour) {
+        int l=1;
+        int h=(int)1e7; //bcz Example Where It Fails:
+                            // dist = [1, 1, 100]
+                            // hour = 2.1
+                            // Your upper bound h would be 100.
+                            // Let's test the speed 100: Time = ceil(1/100) + ceil(1/100) + 100/100 = 1 + 1 + 1 = 3 hours. This is greater than 2.1, so a speed of 100 is too slow. The actual required speed is 1000, which is far outside your search range of [1, 100].
+                                
+        int ans=-1;
+        while(l<=h){
+            int m=l+(h-l)/2;
+            if(isPossible(dist,hour,m)){
+                ans=m;
+                h=m-1;
+            }
+            else{
+                l=m+1;
+            }
+        }
+        return ans;
+    }
+}
